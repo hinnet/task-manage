@@ -76,8 +76,25 @@ docker run -d \
   postgres:18-alpine
 ```
 ### 3. .env files
-- Copy `.env.example` to `.env` both in frontend and backend.
+Copy `.env.example` to `.env` both in frontend and backend.
 This creates a real `.env` file that your app will use.
+
+#### Backend .env
+```
+NODE_ENV=development
+PORT=5000
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/taskmanagement
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+JWT_EXPIRES_IN=7d
+FRONTEND_URL=http://localhost:5173
+# Set to true during initial production deployment to sync the database
+# Switch back to false after the database has been synchronized
+DB_SYNC=false
+```
+#### Frontend .env
+```
+VITE_API_URL=http://localhost:5000/api
+```
 
 ### 4. Run backend
 ```bash
