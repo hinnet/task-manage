@@ -115,16 +115,7 @@ The application will be available at:
 
 Your goal is to implement a CI pipeline for the Task Management System:
 
-1. **Set Up a CI Workflow:**
-   - Use GitHub Actions to automate your workflow.
-   - The pipeline should run on every push and pull request to the main branch.
-
-2. **Automate Testing and Linting:**
-   - Configure the pipeline to run backend and frontend tests.
-   - Add a linter step to check code quality.
-
-  
-   > **Tip:** This project uses [npm workspaces](https://docs.npmjs.com/cli/v10/using-npm/workspaces), you can run commands in specific subdirectories by setting the [`working-directory`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsworking-directory) property in your GitHub Actions job step. For example:
+> **Tip:** This project uses [npm workspaces](https://docs.npmjs.com/cli/v10/using-npm/workspaces), you can run commands in specific subdirectories by setting the [`working-directory`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsworking-directory) property in your GitHub Actions job step. For example:
    > ```yaml
    > - name: Install dependencies
    >   working-directory: ./backend
@@ -132,6 +123,14 @@ Your goal is to implement a CI pipeline for the Task Management System:
    > ```
    > 
    > Review the `package.json` files in the root directory to see the available scripts for each part of the CI pipeline.
+
+1. **Set Up a CI Workflow:**
+   - Use GitHub Actions to automate your workflow.
+   - The pipeline should run on every push and pull request to the main branch.
+
+2. **Automate Testing and Linting:**
+   - Configure the pipeline to run backend and frontend tests.
+   - Add a linter step to check code quality.
 
    **HUOM** Coverage testin ajaminen ja tuloksen vieminen artifactina voisi olla kiva lisä. Täytyy ihmetellä tuota.
 
