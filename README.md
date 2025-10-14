@@ -146,13 +146,40 @@ Your goal is to implement a CI pipeline for the Task Management System:
    - Optionally, push images to a container registry.
 
 ## Task 5. Deployment to Render.com
+   1. **PostgreSQL database** 
+      - Create PostgreSQL database to render.com
+      - You should remember database URL (Internal Database URL) for the next step 2.
+   2. **Backend** 
+      - Create Web Service for the backend
+         - Root directory: `backend`
+         - Build command: `npm install && npm run build`
+         - Start command: `npm start`
+         - Set the environment variables:
+         ```
+         NODE_ENV=production
+         PORT=5000
+         DATABASE_URL=<INTERNAL DATABASE URL>
+         JWT_SECRET=generate a random secure string
+         JWT_EXPIRES_IN=7d
+         FRONTEND_URL=<SET THIS AFTER FRONTEND SETUP>
+         DB_SYNC=true
+         ```
 
-1. **PostgreSQL database** 
-   - Create postgreSQL database to render.com
-2. **Backend** 
-   - Create Web Service for the backend
-3. **Frontend**
-   - Create Static site for the frontend
+      After deployment, review the render.com backend deployment logs for the following messages. These confirm a successful database connection and that the tables have been created.
+      ```
+      Database connection established successfully.
+      Database models synchronized.
+      ```
+
+   3. **Frontend**
+      - Create Static site for the frontend
+         - Root Directory: `frontend`
+         - Build Command: `npm install && npm run build`
+         - Publish Directory: `dist`
+         - Set the environment variables
+         ```
+         VITE_API_URL=<BACKEND URL>/api
+         ```
 
 ## Task 6. Monitoring
 - SOMETHING SIMPLE HERE: Bäkkärissä on health check url. Lokituksen monitorointi?
