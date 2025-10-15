@@ -220,3 +220,28 @@ Your goal is to implement a CI pipeline for the Task Management System:
 - SOMETHING SIMPLE HERE: Bäkkärissä on health check url. Lokituksen monitorointi?
 
 **TODO** PISTEYTYS TASKEILLE
+
+## Deliveries & Submission
+For successful completion of the project, submit the following:
+
+1. **Source Code Repository**
+   - Complete codebase for backend and frontend.
+   - Include all configuration files.
+
+2. **CI/CD Workflow**
+   - GitHub Actions workflow file(s) implementing CI (testing, linting, security checks) and CD (deployment steps).
+
+3. **Docker Integration**
+   - Dockerfiles for backend and frontend.
+   - Instructions or scripts for building and running containers locally.
+
+4. **Deployment**
+   - Render.com service URLs for backend and frontend.
+   - Description of environment variable setup and deployment process.
+
+5. **Monitoring**
+   - Description of implemented health checks and logging/monitoring approach.
+
+6. **Documentation**
+   - Updated `README.md` with setup, usage, and deployment instructions.
+   - Brief summary of what was implemented, challenges faced, and lessons learned. 
