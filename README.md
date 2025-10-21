@@ -265,7 +265,7 @@ Your goal is to implement a CI pipeline for the Task Management System:
    - Add steps to check for outdated or vulnerable dependencies using tools like [`npm audit` with an `--audit-level`](https://docs.npmjs.com/cli/commands/npm-audit).
 
 
-## Task 4. Docker Integration
+## Task 4. Docker Containers
 
 1. Create Dockerfiles for both backend and frontend applications. 
 
@@ -276,9 +276,27 @@ Your goal is to implement a CI pipeline for the Task Management System:
 
 When creating Dockerfiles and building images, consider the following best practices:
 
-* prefer official base images (e.g., `node`, `nginx` and `postgres`)
-* use multi-stage builds to minimize image size
-* use `.dockerignore` files to exclude unnecessary files and secrets from the build context
+* prefer [official base images](https://hub.docker.com/u/library) (e.g., `node`, `nginx` etc.)
+* consider using multi-stage builds to minimize image size
+* use `.dockerignore` files to exclude unnecessary files (`node_modules`) and secrets (`.env`) from the build context.
+
+
+**Notes on environment variables:**
+
+While both the backend and frontend applications rely on environment variables for configuration, there is a big difference in how the backend and frontend handle them in Docker containers.
+
+The backend application reads environment variables directly from the container's environment **at runtime**. This means you can set environment variables when starting the container or in a Docker Compose file.
+
+The frontend application, however, is built into static files during the build process, and there is no runtime environment to read variables from. Therefore, environment variables for the frontend must be injected **at build time**. In the Dockerfile, you can use the [`ARG` instruction](https://www.docker.com/blog/docker-best-practices-using-arg-and-env-in-your-dockerfiles/) to define build-time variables and then pass them to the build command.
+
+
+**Notes on monorepo structure:**
+
+This project is very similar to repositories used in many Docker tutorials. However, the monorepo and npm workspaces structure may require some adjustments when creating Dockerfiles. Both the backend and frontend have their own `package.json` files, but they also share a `package.json` and `node_modules` folder in the root directory.
+
+There are numerous ways to structure Dockerfiles for monorepos and you can choose your approach based on your skills and preferences. In this case, creating separate Dockerfiles in both `backend` and `frontend` directories and copying only the service specific files into the images is a straightforward approach. In more complex repositories, where the services would actually share code, you might need a more advanced setup.
+
+**Notes on networking:**
 
 When running the backend container, it needs to able to connect to the PostgreSQL database. Although we started a local PostgreSQL instance earlier, that container is not in the same Docker network as the backend container, so they cannot communicate by default. We recommend using Docker Compose to define and run all the services together in a single network.
 
@@ -287,7 +305,7 @@ When running the backend container, it needs to able to connect to the PostgreSQ
 
 You can choose either **Path 1 (Manual deployment & CD workflow)** or **Path 2 (Deployment using containers)** for deploying your application to Render.com. 
 
-### Path 1: Manual deployemnt & CD workflow
+### Path 1: Manual deployment & CD workflow
 
    1. **PostgreSQL database** 
       - Create a PostgreSQL database in render.com
