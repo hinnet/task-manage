@@ -1,26 +1,4 @@
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-    ports:
-      - "5000:5000"
-    env_file:
-      - backend/.env
-    depends_on:
-      - db
-  
-  frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
-    ports:
-      - "5173:80"
-    env_file:
-      - frontend/.env
-    depends_on:
-      - backend
-
   db:
     image: postgres:latest
     container_name: taskmanagement-db
@@ -30,4 +8,31 @@ services:
       POSTGRES_DB: taskmanagement
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d taskmanagement"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    ports:
+      - "5000:5000"
+    env_file:
+      - backend/.env
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "5173:80"
+    env_file:
+      - frontend/.env
