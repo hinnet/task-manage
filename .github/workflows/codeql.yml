@@ -43,5 +43,5 @@ jobs:
         uses: actions/checkout@v5
       - name: Build images via docker-compose
         run: |
-          cd task-manage
+          cd ../..
           docker compose build
