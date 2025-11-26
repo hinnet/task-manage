@@ -1,0 +1,21 @@
+FROM node:lts-alpine AS build
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY frontend/package*.json ./frontend/
+
+RUN npm ci --workspace=frontend
+
+COPY . .
+
+ARG VITE_API_URL
+RUN VITE_API_URL=$VITE_API_URL npm run build:frontend
+
+FROM nginx:alpine AS production
+
+COPY --from=build /app/frontend/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
