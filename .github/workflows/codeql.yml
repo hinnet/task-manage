@@ -42,6 +42,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
       - name: Build images via docker-compose
-        run: |
-          cd ../..
-          docker compose build
+        run: docker compose build
