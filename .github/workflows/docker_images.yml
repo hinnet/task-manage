@@ -46,7 +46,7 @@ jobs:
         - name: Build and push ${{ matrix.service }} Docker image
           uses: docker/build-push-action@v6
           with:
-            context: ${{ github.workspace }}/${{ matrix.service }}
+            context: .
             file: ${{ github.workspace }}/${{ matrix.service }}/Dockerfile
             push: true
             tags: ${{ steps.meta.outputs.tags }}
