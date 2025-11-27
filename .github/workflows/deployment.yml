@@ -1,13 +1,14 @@
 name: Deploy to Render when image is pushed to GHCR
 
 on:
-  registry_package:
-    types: [ published ]
+  workflow_run:
+    workflows: ["Build and push Docker images to Container Registry"]
+    types:
+      - completed
 
 jobs:
     render-deployment:
       runs-on: ubuntu-latest
-      if: github.event.registry_package.package_type == 'container'
       steps:
         - name: Trigger backend deployment
           env:
