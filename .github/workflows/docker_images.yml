@@ -23,6 +23,13 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v5
 
+        - name: Debug, list workspace
+          run: |
+            echo "WORKSPACE: $GITHUB_WORKSPACE"
+            ls -la "${{ github.workspace }}"
+            echo "MATRIX SERVICE: ${{ matrix.service }}"
+            ls -la "${{ github.workspace }}/${{ matrix.service }}" || true
+
         - name: Log in to the Container registry
           uses: docker/login-action@v3
           with:
