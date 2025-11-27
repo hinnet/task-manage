@@ -12,10 +12,10 @@ jobs:
       steps:
         - name: Trigger backend deployment
           env:
-            deploy_url_be: ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
-          run: curl '$deploy_url_be'
+            DEPLOY_URL_BE: ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
+          run: curl "$DEPLOY_URL_BE"
 
         - name: Trigger frontend deployment
           env:
-            deploy_url_fe: ${{ secrets.RENDER_DEPLOY_HOOK_URL_FRONTEND }}
-          run: curl '$deploy_url_fe'
+            DEPLOY_URL_FE: ${{ secrets.RENDER_DEPLOY_HOOK_URL_FRONTEND }}
+          run: curl "$DEPLOY_URL_FE"
