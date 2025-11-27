@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: taskmanagement-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: taskmanagement
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d taskmanagement"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      target: development
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    ports:
+      - "5000:5000"
+    env_file:
+      - backend/.env
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      target: development
+    ports:
+      - "5173:5173"
+    env_file:
+      - frontend/.env
