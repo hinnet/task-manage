@@ -1,18 +1,18 @@
 name: Build and push Docker images to Container Registry
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_BASE: ${{ github.repository_owner }}/${{ github.repository }}
+  IMAGE_BASE: ${{ github.repository }}
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [backend, frontend]
+        service: [ backend, frontend ]
     permissions:
       contents: read
       packages: write
@@ -25,9 +25,9 @@ jobs:
 
         - name: Debug, list workspace
           run: |
-            echo "WORKSPACE: $GITHUB_WORKSPACE"
+            echo "WORKSPACE:"
             ls -la "${{ github.workspace }}"
-            echo "MATRIX SERVICE: ${{ matrix.service }}"
+            echo "MATRIX SERVICE:"
             ls -la "${{ github.workspace }}/${{ matrix.service }}" || true
 
         - name: Log in to the Container registry
@@ -46,8 +46,8 @@ jobs:
         - name: Build and push ${{ matrix.service }} Docker image
           uses: docker/build-push-action@v6
           with:
-            context: ./${{ matrix.service }}
-            file: ./${{ matrix.service }}/Dockerfile
+            context: ${{ github.workspace }}/${{ matrix.service }}
+            file: ${{ github.workspace }}/${{ matrix.service }}/Dockerfile
             push: true
             tags: ${{ steps.meta.outputs.tags }}
             labels: ${{ steps.meta.outputs.labels }}
