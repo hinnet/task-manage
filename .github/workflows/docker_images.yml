@@ -1,4 +1,4 @@
-name: Docker Build Images & Push to Container Registry
+name: Build and push Docker images to Container Registry
 on:
   push:
     branches: [main]
