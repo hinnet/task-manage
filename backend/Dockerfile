@@ -29,4 +29,6 @@ RUN npm ci --workspace=backend --omit=dev
 
 COPY --from=build /app/backend/dist ./backend/dist
 
+EXPOSE 5000
+
 CMD ["npm", "--workspace=backend", "start"]
