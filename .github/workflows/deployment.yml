@@ -13,9 +13,19 @@ jobs:
         - name: Trigger backend deployment
           env:
             DEPLOY_URL_BE: ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
-          run: curl "$DEPLOY_URL_BE"
+          run: |
+            if [ -z "$DEPLOY_URL_BE" ]; then
+              echo "RENDER_DEPLOY_HOOK_URL_BACKEND secret is not set."
+              exit 1
+            fi
+            curl "$DEPLOY_URL_BE"
 
         - name: Trigger frontend deployment
           env:
             DEPLOY_URL_FE: ${{ secrets.RENDER_DEPLOY_HOOK_URL_FRONTEND }}
-          run: curl "$DEPLOY_URL_FE"
+          run: |
+            if [ -z "$DEPLOY_URL_FE" ]; then
+              echo "RENDER_DEPLOY_HOOK_URL_FRONTEND secret is not set."
+              exit 1
+            fi
+            curl "$DEPLOY_URL_FE"
