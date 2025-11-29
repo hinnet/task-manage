@@ -8,28 +8,30 @@ on:
 
 jobs:
     Node-CI-pipeline:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v5
+      permissions:
+        contents: read
+      runs-on: ubuntu-latest
+      steps:
+          - name: Checkout repository
+            uses: actions/checkout@v5
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v5
-              with:
-                node-version: '24'
+          - name: Setup Node.js
+            uses: actions/setup-node@v5
+            with:
+              node-version: '24'
 
-            - name: Install dependencies
-              run: npm ci --workspaces
+          - name: Install dependencies
+            run: npm ci --workspaces
 
-            - name: Check for vulnerabilities
-              run: npm audit --audit-level=high
+          - name: Check for vulnerabilities
+            run: npm audit --audit-level=high
 
-            - name: Run tests
-              run: |
-                npm run test:backend
-                npm run test:frontend
+          - name: Run tests
+            run: |
+              npm run test:backend
+              npm run test:frontend
 
-            - name: Linting
-              run: |
-                npm run lint:backend
-                npm run lint:frontend
+          - name: Linting
+            run: |
+              npm run lint:backend
+              npm run lint:frontend
