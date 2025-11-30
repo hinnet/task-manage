@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-      target: development
+      target: production
     depends_on:
       db:
         condition: service_healthy
@@ -33,8 +33,8 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
-      target: development
+      target: production
     ports:
-      - "5173:5173"
+      - "3000:3000"
     env_file:
       - frontend/.env
